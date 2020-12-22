@@ -158,14 +158,6 @@ if ( version_compare( PHP_VERSION, '7.0.0', '<=' ) ) {
 // 	);
 // }
 
-
-
-
-
-
-
-// <?php
-
 function loadMyBlockFiles() {
   wp_enqueue_script(
     'my-super-unique-handle',
