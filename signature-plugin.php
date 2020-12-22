@@ -2,12 +2,12 @@
 
 /**
  * @package   Signature_Plugin
- * @author    {{author_name}} <{{author_email}}>
+ * @author    Adam Allalou <{{author_email}}>
  * @copyright {{author_copyright}}
  * @license   {{author_license}}
  * @link      {{author_url}}
  *
- * Plugin Name:     {{signature_plugin}}
+ * Plugin Name:     Signature Plugin
  * Plugin URI:      @TODO
  * Description:     @TODO
  * Version:         {{plugin_version}}
@@ -40,6 +40,13 @@ add_action(
 	}
 	);
 
+	add_action('content', 'signature');
+	function signature($content)
+	{
+		return $content . '<p>Hey from Niptun</p>!';
+	}
+
+
 // {{/if}}
 if ( version_compare( PHP_VERSION, '7.0.0', '<=' ) ) {
 	add_action(
@@ -64,89 +71,138 @@ if ( version_compare( PHP_VERSION, '7.0.0', '<=' ) ) {
 	return;
 }
 
-$signature_plugin_libraries = require_once PN_PLUGIN_ROOT . 'vendor/autoload.php';
+// $signature_plugin_libraries = require_once PN_PLUGIN_ROOT . 'vendor/autoload.php';
 
-require_once PN_PLUGIN_ROOT . 'functions/functions.php';
-// WPBPGen{{#if libraries_wpbp__debug}}
-require_once PN_PLUGIN_ROOT . 'functions/debug.php';
-// {{/if}}
+// require_once PN_PLUGIN_ROOT . 'functions/functions.php';
+// // WPBPGen{{#if libraries_wpbp__debug}}
+// require_once PN_PLUGIN_ROOT . 'functions/debug.php';
+// // {{/if}}
 
-// Add your new plugin on the wiki: https://github.com/WPBP/WordPress-Plugin-Boilerplate-Powered/wiki/Plugin-made-with-this-Boilerplate
+// // Add your new plugin on the wiki: https://github.com/WPBP/WordPress-Plugin-Boilerplate-Powered/wiki/Plugin-made-with-this-Boilerplate
 
-// WPBPGen{{#if libraries_micropackage__requirements}}
-$requirements = new \Micropackage\Requirements\Requirements(
-	'Plugin Name',
-	array(
-		'php'            => '7.0',
-		'php_extensions' => array( 'mbstring' ),
-		'wp'             => '5.3',
-	// 'plugins'            => array(
-	// array( 'file' => 'hello-dolly/hello.php', 'name' => 'Hello Dolly', 'version' => '1.5' )
-	// ),
-)
-	);
+// // WPBPGen{{#if libraries_micropackage__requirements}}
+// $requirements = new \Micropackage\Requirements\Requirements(
+// 	'Plugin Name',
+// 	array(
+// 		'php'            => '7.0',
+// 		'php_extensions' => array( 'mbstring' ),
+// 		'wp'             => '5.3',
+// 	// 'plugins'            => array(
+// 	// array( 'file' => 'hello-dolly/hello.php', 'name' => 'Hello Dolly', 'version' => '1.5' )
+// 	// ),
+// )
+// 	);
 
-if ( ! $requirements->satisfied() ) {
-	$requirements->print_notice();
+// if ( ! $requirements->satisfied() ) {
+// 	$requirements->print_notice();
 
-	return;
+// 	return;
+// }
+
+// // {{/if}}
+
+// // WPBPGen{{#if libraries_freemius__wordpress-sdk}}
+// /**
+//  * Create a helper function for easy SDK access.
+//  *
+//  * @global type $pn_fs
+//  * @return object
+//  */
+// function pn_fs() {
+// 	global $pn_fs;
+
+// 	if ( !isset( $pn_fs ) ) {
+// 		require_once PN_PLUGIN_ROOT . 'vendor/freemius/wordpress-sdk/start.php';
+// 		$pn_fs = fs_dynamic_init(
+// 			array(
+// 				'id'             => '',
+// 				'slug'           => 'plugin-name',
+// 				'public_key'     => '',
+// 				'is_live'        => false,
+// 				'is_premium'     => true,
+// 				'has_addons'     => false,
+// 				'has_paid_plans' => true,
+// 				'menu'           => array(
+// 					'slug' => 'plugin-name',
+// 				),
+// 			)
+// 		);
+
+// 		if ( $pn_fs->is_premium() ) {
+// 			$pn_fs->add_filter(
+// 				'support_forum_url',
+// 				static function ( $wp_org_support_forum_url ) { //phpcs:ignore
+// 					return 'https://your-url.test';
+// 				}
+// 			);
+// 		}
+// 	}
+
+// 	return $pn_fs;
+// }
+
+// // pn_fs();
+// // {{/if}}
+
+// // WPBPGen{{#if libraries_yahnis-elsts__plugin-update-checker}}
+// // Documentation to integrate GitHub, GitLab or BitBucket https://github.com/YahnisElsts/plugin-update-checker/blob/master/README.md
+// Puc_v4_Factory::buildUpdateChecker( 'https://github.com/user-name/repo-name/', __FILE__, 'unique-plugin-or-theme-slug' );
+// // {{/if}}
+
+// if ( ! wp_installing() ) {
+// 	add_action(
+// 		'plugins_loaded',
+// 		static function () use ( $signature_plugin_libraries ) {
+// 			new \Signature_Plugin\Engine\Initialize( $signature_plugin_libraries );
+// 		}
+// 	);
+// }
+
+
+
+
+
+
+
+// <?php
+
+function loadMyBlockFiles() {
+  wp_enqueue_script(
+    'my-super-unique-handle',
+    plugin_dir_url(__FILE__) . 'my-block.js',
+    array('wp-blocks', 'wp-i18n', 'wp-editor'),
+    true
+  );
+}
+ 
+add_action('enqueue_block_editor_assets', 'loadMyBlockFiles');
+
+/* To make your block "dynamic" uncomment
+  the code below and in your JS have your "save"
+  method return null
+*/
+
+/*
+function borderBoxOutput($props) {
+  return '<h3 style="border: 5px solid' . $props['color'] . '">' . $props['content'] . '</h3>';
 }
 
-// {{/if}}
+register_block_type( 'brad/border-box', array(
+  'render_callback' => 'borderBoxOutput',
+) );
+*/
 
-// WPBPGen{{#if libraries_freemius__wordpress-sdk}}
-/**
- * Create a helper function for easy SDK access.
- *
- * @global type $pn_fs
- * @return object
- */
-function pn_fs() {
-	global $pn_fs;
+/* To Save Post Meta from your block uncomment
+  the code below and adjust the post type and
+  meta name values accordingly. If you want to
+  allow multiple values (array) per meta remove
+  the 'single' property.
+*/
 
-	if ( !isset( $pn_fs ) ) {
-		require_once PN_PLUGIN_ROOT . 'vendor/freemius/wordpress-sdk/start.php';
-		$pn_fs = fs_dynamic_init(
-			array(
-				'id'             => '',
-				'slug'           => 'plugin-name',
-				'public_key'     => '',
-				'is_live'        => false,
-				'is_premium'     => true,
-				'has_addons'     => false,
-				'has_paid_plans' => true,
-				'menu'           => array(
-					'slug' => 'plugin-name',
-				),
-			)
-		);
-
-		if ( $pn_fs->is_premium() ) {
-			$pn_fs->add_filter(
-				'support_forum_url',
-				static function ( $wp_org_support_forum_url ) { //phpcs:ignore
-					return 'https://your-url.test';
-				}
-			);
-		}
-	}
-
-	return $pn_fs;
+/*
+function myBlockMeta() {
+  register_meta('post', 'color', array('show_in_rest' => true, 'type' => 'string', 'single' => true));
 }
 
-// pn_fs();
-// {{/if}}
-
-// WPBPGen{{#if libraries_yahnis-elsts__plugin-update-checker}}
-// Documentation to integrate GitHub, GitLab or BitBucket https://github.com/YahnisElsts/plugin-update-checker/blob/master/README.md
-Puc_v4_Factory::buildUpdateChecker( 'https://github.com/user-name/repo-name/', __FILE__, 'unique-plugin-or-theme-slug' );
-// {{/if}}
-
-if ( ! wp_installing() ) {
-	add_action(
-		'plugins_loaded',
-		static function () use ( $signature_plugin_libraries ) {
-			new \Signature_Plugin\Engine\Initialize( $signature_plugin_libraries );
-		}
-	);
-}
+add_action('init', 'myBlockMeta');
+*/
